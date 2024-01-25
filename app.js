@@ -42,7 +42,7 @@ app.use(
     resave: false, 
     saveUninitialized: false, 
     cookie: {
-      maxAge: 86400 // 1 day
+      maxAge: 86400000 // 1 day
     },
     store: MongoStore.create({mongoUrl: mongoDb}),
   }));
