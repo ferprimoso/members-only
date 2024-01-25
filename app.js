@@ -4,14 +4,14 @@ const session = require('express-session');
 const passport = require('passport');
 const helmet = require('helmet');
 const MongoStore = require('connect-mongo');
-const compression = require("compression");
+const compression = require('compression');
 const path = require('path');
 const logger = require('morgan');
 require('dotenv').config();
 
 const indexRouter = require('./routes/index');
 
-const User = require('./models/user')
+const User = require('./models/user');
 
 // Mongoose Connection
 const mongoose = require('mongoose');
@@ -35,19 +35,18 @@ const app = express();
 
 require('./config/passport');
 
-
 app.use(
-  session({ 
-    secret: process.env.SESSION_SECRET, 
-    resave: false, 
-    saveUninitialized: false, 
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
     cookie: {
-      maxAge: 86400000 // 1 day
+      maxAge: 86400000, // 1 day
     },
-    store: MongoStore.create({mongoUrl: mongoDb}),
-  }));
+    store: MongoStore.create({ mongoUrl: mongoDb }),
+  })
+);
 
-  
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(helmet());
@@ -55,8 +54,8 @@ app.use(helmet());
 app.use((req, res, next) => {
   console.log(req.session);
   console.log(req.user);
-  next()
-})
+  next();
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -66,7 +65,7 @@ app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Set up rate limiter: maximum of twenty requests per minute
-const RateLimit = require("express-rate-limit");
+const RateLimit = require('express-rate-limit');
 const limiter = RateLimit({
   windowMs: 1 * 60 * 1000, // 1 minute
   max: 40,
@@ -82,17 +81,16 @@ app.use(compression());
 
 //Loggin
 
-
 //Routing
 app.use('/', indexRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

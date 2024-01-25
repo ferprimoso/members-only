@@ -1,60 +1,48 @@
-<%- include('./partials/header', { title: title }) %>
+<%- include('./partials/header', { title: title }) %> <% if (!user) { %>
+<div class="m-auto max-w-screen-md p-8 rounded-xl flex flex-col items-center">
+  <h1 class="text-2xl text-white">
+    <span>you need to login to create messages</span>
+  </h1>
+</div>
+<% } %>
 
-  <% if (!user) { %>
-    <div class="m-auto max-w-screen-md p-8 rounded-xl flex flex-col items-center ">
-      <h1 class="text-2xl text-white">
-        <span>you need to login to create messages</span>
-      </h1>
+<div>
+  <h1 class="text-blue-500 text-center text-6xl md:text-8xl">Messages</h1>
+  <% for(const message of messages ) { %>
+  <div
+    class="card m-auto bg-white mt-8 max-w-screen-md p-4 md:rounded-xl flex flex-col"
+  >
+    <h2 class="font-bold"><%- message.title %></h2>
+    <p><%- message.message %></p>
+    <% if (user && user.membership_status) { %>
+    <div class="mt-2 flex justify-end gap-4">
+      <h2>
+        <span class="font-bold">Author:</span>
+        <%= message.user.name %>
+      </h2>
+      <h2>
+        <span class="font-bold">Date:</span>
+        <%= message.timestamp_formatted %>
+      </h2>
     </div>
+
+    <% } %> <% if (user && user.admin) { %>
+    <form
+      class="flex mt-2 items-center justify-end"
+      action="/delete-message/<%= message._id %>"
+      method="post"
+    >
+      <input type="hidden" name="_method" value="DELETE" />
+      <img src="images/bin.png" class="size-4" alt="bin-icon" />
+      <button type="submit" class="text-red-500 font-bold">Delete</button>
+    </form>
+
     <% } %>
+  </div>
+  <% } %>
+</div>
+<a href="/newmessage" class="float visible md:invisible">
+  <div class="text-4xl my-float">+</div>
+</a>
 
-      <div>
-        <h1 class="text-blue-500 text-center text-6xl md:text-8xl">
-          Messages
-        </h1>
-        <% for(const message of messages ) { %>
-          <div class="card m-auto bg-white mt-8 max-w-screen-md p-4  md:rounded-xl flex flex-col">
-
-            <h2 class="font-bold">
-              <%- message.title %>
-            </h2>
-            <p>
-              <%- message.message %>
-            </p>
-            <% if (user && user.membership_status) { %>
-              <div class="mt-2 flex justify-end gap-4">
-
-                <h2>
-                  <span class="font-bold">Author:</span>
-                  <%= message.user.name %>
-                </h2>
-                <h2>
-                  <span class="font-bold">Date:</span>
-                  <%= message.timestamp_formatted %>
-                </h2>
-
-              </div>
-
-              <% } %>
-
-                <% if (user && user.admin) { %>
-                  <form class="flex mt-2 items-center justify-end" action="/delete-message/<%= message._id %>"
-                    method="post">
-                    <input type="hidden" name="_method" value="DELETE">
-                    <img src="images/bin.png" class="size-4" alt="bin-icon">
-                    <button type="submit" class="text-red-500  font-bold">Delete</button>
-                  </form>
-
-                  <% } %>
-
-
-
-          </div>
-          <% } %>
-      </div>
-      <a href="/newmessage" class="float visible md:invisible">
-        <div class="text-4xl my-float">+</div>
-      </a>
-
-
-      <%- include('./partials/footer') %>
+<%- include('./partials/footer') %>
