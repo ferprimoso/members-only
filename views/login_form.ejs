@@ -1,0 +1,32 @@
+<%- include('./partials/header') %>
+  <div class="m-auto bg-white mt-8 max-w-screen-md w-full p-8 sm:rounded-xl flex flex-col items-center ">
+    <h1 class="text-4xl mb-8">
+      Login
+    </h1>
+    <form method="post" class="flex flex-col justify-center">
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="username" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password: </label>
+        <input type="password" id="password" name="password" class="form-control" required>
+      </div>
+      <button class="button" type="submit"> Login </button>
+    </form>
+
+    <% if (errors) { %>
+      <br>
+      <ul class="list-disc">
+        <% for(error of errors) { %>
+          <li class="text-red-800">
+            <%= error.msg %>
+          </li>
+          <% } %>
+      </ul>
+      <% } %>
+  </div>
+
+
+
+  <%- include('./partials/footer') %>

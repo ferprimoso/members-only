@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html class="max-lg">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <title>
+    <% if (title) { %>
+      <%= title %>
+        <% } else {%>
+          <% } %>
+
+  </title>
+</head>
+
+<header class="bg-slate-950 mb-4">
+  <nav
+    class="font-sans flex flex-col text-center sm:flex-row sm:text-left sm:justify-between py-4 px-6 text-white font-bold sm:items-baseline  m-auto max-w-screen-xl">
+    <div class="mb-2 sm:mb-0 flex flex-col sm:flex-col">
+      <a href="/" class="text-lg no-underline text-grey-darkest text-blue-500 hover:text-blue-dark">Members Only
+        Club</a>
+    </div>
+    <% if (user) { %>
+
+      <div class="flex items-center justify-center">
+        <span class="text-gray-100 mr-8 hidden sm:inline">Hello <%= user.name %> </span>
+
+        <div class="flex items-center flex-col sm:flex-row gap-4">
+          <% if (user && !user.membership_status) { %>
+            <a role="button" href="/join_club" class="nav-button">Become
+              member</a>
+            <% } %>
+              <% if (user && !user.admin) { %>
+                <a href="/join_admin" class="nav-button">Become Admin</a>
+                <% } %>
+                  <a href="/newmessage" class="nav-button">New Message</a>
+                  <a href="/logout" class="nav-button">Logout</a>
+        </div>
+      </div>
+
+
+      <% } else {%>
+        <div class="flex items-center flex-col sm:flex-row gap-4">
+          <a href="/login" class="nav-button">Login</a>
+          <a href="/signup" class="nav-button">Signup</a>
+        </div>
+        <% }%>
+
+
+
+
+
+
+
+  </nav>
+</header>
+
+<body class="bg-slate-950 min-h-screen flex flex-col  ">
