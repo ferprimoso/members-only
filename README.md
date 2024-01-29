@@ -17,6 +17,11 @@ Click here to see the project in action => [Live Preview](https://grave-tide-ter
 - Only members can see the author and date
 - Admins can additionally delete messages
 
+### Secret Codes:
+
+**Members Secret Code** = rabbit <br>
+**Admin Secret Code** = elephant
+
 ## 💻 Built with
 
 Technologies used in the project:
